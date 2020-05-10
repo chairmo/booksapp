@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-
 public class User implements ObjectModel {
 
     @Id

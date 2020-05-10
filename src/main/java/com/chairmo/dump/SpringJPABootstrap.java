@@ -37,7 +37,7 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-     //   loadUsers();
+        loadUsers();
      //   loadAuthors();
      //   loadBooks();
     }

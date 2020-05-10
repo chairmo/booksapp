@@ -1,15 +1,12 @@
 package com.chairmo.service.jpaServices;
 
-import com.chairmo.config.IntegrationTestConfig;
 import com.chairmo.model.Author;
 import com.chairmo.model.User;
-import com.chairmo.service.AuthorService;
 import com.chairmo.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -17,7 +14,7 @@ import java.util.List;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = IntegrationTestConfig.class)
+@SpringBootTest
 public class UserServiceImplTest {
     private UserService userService;
     @Autowired
@@ -28,10 +25,14 @@ public class UserServiceImplTest {
 
     @Test
     public void listAll() throws Exception {
+        User user = new User();
+        user.setUsername("chairmo");
+        user.setPassword("james");
+        userService.saveOrUpdate(user);
 
-        List<?> userList = userService.listAll();
+        List<User> userList = (List<User>) userService.listAll();
 
-        assert userList.size() == 0;
+        assert userList.size() != 0;
     }
 
     @Test
@@ -46,7 +47,7 @@ public class UserServiceImplTest {
 
         user.setUsername("chairmo");
         user.setPassword("james");
-        user.setAuthor(new Author());
+        user.setAuthor(author);
 
         User savedUser = userService.saveOrUpdate(user);
 
