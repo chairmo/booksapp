@@ -30,6 +30,4 @@ build/
 
 ### VS Code ###
 .vscode/
-/src/main/java/com/chairmo/repository/
-/src/main/java/com/chairmo/controller/
 /src/main/java/com/chairmo/exception/

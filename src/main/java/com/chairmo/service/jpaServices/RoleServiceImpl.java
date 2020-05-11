@@ -1,42 +1,40 @@
 package com.chairmo.service.jpaServices;
 
-import com.chairmo.model.Book;
-import com.chairmo.service.BookService;
-import org.springframework.context.annotation.Profile;
+import com.chairmo.model.role.Role;
+import com.chairmo.service.securityService.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
-public class BookServiceImpl extends AbstractJpaDaoService implements BookService {
-
+public class RoleServiceImpl extends AbstractJpaDaoService implements RoleService {
     @Override
-    public List<Book> listAll() {
+    public List<Role> listAll() {
         EntityManager em = emf.createEntityManager();
-        return em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+        return em.createQuery("SELECT r FROM Role r", Role.class).getResultList();
     }
 
     @Override
-    public Book getById(Integer id) {
+    public Role getById(Integer id) {
         EntityManager em = emf.createEntityManager();
-        return em.find(Book.class, id);
+        return em.find(Role.class, id);
     }
 
     @Override
-    public Book saveOrUpdate(Book objectModel) {
+    public Role saveOrUpdate(Role objectModel) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Book book = em.merge(objectModel);
+        Role role = em.merge(objectModel);
         em.getTransaction().commit();
-        return book;
+        return role;
     }
 
     @Override
     public void delete(Integer id) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.remove(em.find(Book.class, id));
+        em.remove(em.find(Role.class, id));
         em.getTransaction().commit();
     }
 }
