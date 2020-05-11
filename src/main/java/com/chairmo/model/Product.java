@@ -13,4 +13,5 @@ public class Product extends AbstractObjectModel {
     private String description;
     private BigDecimal price;
     private String imageUrl;
+    private String name;
 }

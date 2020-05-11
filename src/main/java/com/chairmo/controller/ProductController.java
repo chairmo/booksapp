@@ -1,13 +1,15 @@
 package com.chairmo.controller;
 
+import com.chairmo.exception.ObjectNotFoundException;
 import com.chairmo.model.Product;
-import com.chairmo.service.ProductService;
+import com.chairmo.repositories.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -20,28 +22,30 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getUser(@PathVariable Integer id) {
-        return new ResponseEntity<>(productService.getById(id), HttpStatus.OK);
+    public ResponseEntity<Optional<Product>> getUser(@PathVariable Integer id) {
+        return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public List<?> getAllUsers() {
-        return productService.listAll();
+    public List<Product> getAllUsers() {
+        return productService.findAll();
     }
 
     @PostMapping("/new")
     public ResponseEntity<Product> createUser(@RequestBody Product product) {
-        return new ResponseEntity<>(productService.saveOrUpdate(product), HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateUser(@PathVariable Integer id, @RequestBody Product product) {
-        return id == null?new ResponseEntity<>(HttpStatus.NOT_FOUND):
-                new ResponseEntity<>(productService.saveOrUpdate(product), HttpStatus.OK);
+    public ResponseEntity<Product> updateUser(@PathVariable("id") Integer id, @RequestBody Product product) {
+        Optional<Product> product1 = productService.findById(id);
+        if (!product1.isPresent()) throw new ObjectNotFoundException("Id not found");
+        else
+        return new ResponseEntity<>(productService.save(product), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Integer id){
-        productService.delete(id);
+        productService.deleteById(id);
     }
 }

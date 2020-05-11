@@ -1,12 +1,14 @@
 package com.chairmo.service.jpaServices;
 
 import com.chairmo.model.Customer;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
+@Profile("Dao")
 public class CustomerServiceImpl extends AbstractJpaDaoService implements com.chairmo.service.CustomerService {
     @Override
     public List<Customer> listAll() {

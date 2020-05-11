@@ -4,12 +4,14 @@ import com.chairmo.model.User;
 import com.chairmo.service.UserService;
 import com.chairmo.service.securityService.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
+@Profile("Dao")
 public class UserServiceImpl extends AbstractJpaDaoService implements UserService {
 
     private EncryptionService encryptionService;

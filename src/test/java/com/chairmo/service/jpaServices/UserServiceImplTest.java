@@ -1,6 +1,7 @@
 package com.chairmo.service.jpaServices;
 
-import com.chairmo.model.User;
+import com.chairmo.model.*;
+import com.chairmo.service.ProductService;
 import com.chairmo.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -39,9 +41,9 @@ public class UserServiceImplTest {
 
         user.setUsername("chairmo");
         user.setPassword("james");
-
         User savedUser = userService.saveOrUpdate(user);
 
         assert savedUser.getId() != null;
     }
+
 }

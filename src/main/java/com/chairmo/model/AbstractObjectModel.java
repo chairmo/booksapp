@@ -3,6 +3,8 @@ package com.chairmo.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @MappedSuperclass
@@ -14,19 +16,26 @@ public class AbstractObjectModel implements ObjectModel {
     @Version
     private Integer version;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreated;
+    @Basic
+    private LocalDate dateCreated;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdated;
+    @Basic
+    private LocalDateTime lastUpdated;
 
     @Override
     public Integer getId() {
-        return null;
+        return id;
     }
 
     @Override
     public void setId(Integer id) {
-
+        this.id = id;
+    }
+    @PrePersist
+    @PreUpdate
+    public void updateTimeStamp(){
+        lastUpdated = LocalDateTime.now();
+        if (dateCreated == null)
+            dateCreated =LocalDate.now();
     }
 }

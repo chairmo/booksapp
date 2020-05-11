@@ -2,12 +2,14 @@ package com.chairmo.service.jpaServices;
 
 import com.chairmo.model.role.Role;
 import com.chairmo.service.securityService.RoleService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
+@Profile("Dao")
 public class RoleServiceImpl extends AbstractJpaDaoService implements RoleService {
     @Override
     public List<Role> listAll() {

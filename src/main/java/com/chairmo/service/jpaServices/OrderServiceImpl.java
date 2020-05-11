@@ -2,12 +2,14 @@ package com.chairmo.service.jpaServices;
 
 import com.chairmo.model.Order;
 import com.chairmo.service.OrderService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
+@Profile("Dao")
 public class OrderServiceImpl extends AbstractJpaDaoService implements OrderService {
 
     @Override

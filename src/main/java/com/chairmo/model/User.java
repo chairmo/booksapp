@@ -3,7 +3,6 @@ package com.chairmo.model;
 import com.chairmo.model.role.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.Version;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,17 +12,9 @@ import java.util.List;
 @Data
 @Entity
 public class User extends AbstractObjectModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Version
-    private Integer version;
     private String username;
-
     @Transient
     private String password;
-
     private String encryptedPassword;
     private Boolean enabled = true;
 
@@ -36,16 +27,6 @@ public class User extends AbstractObjectModel {
     @ManyToMany
     @JoinTable
     private List<Role> roles = new ArrayList<>();
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public void addRole(Role role){
         if (!this.roles.contains(role)){

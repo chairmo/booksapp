@@ -1,7 +1,9 @@
 package com.chairmo.controller;
 
+import com.chairmo.exception.ObjectNotFoundException;
 import com.chairmo.model.User;
-import com.chairmo.service.UserService;
+
+import com.chairmo.repositories.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -22,28 +25,30 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Integer id) {
-        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
+    public ResponseEntity<Optional<User>> getUser(@PathVariable Integer id) {
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public List<?> getAllUsers() {
-        return userService.listAll();
+    public List<User> getAllUsers() {
+        return userService.findAll();
     }
 
     @PostMapping("/new")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.saveOrUpdate(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
-            return id == null?new ResponseEntity<>(HttpStatus.NOT_FOUND):
-                    new ResponseEntity<>(userService.saveOrUpdate(user), HttpStatus.OK);
+        Optional<User> user1 = userService.findById(id);
+
+        if (!user1.isPresent()) throw new ObjectNotFoundException("Id not found");
+           else return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Integer id){
-        userService.delete(id);
+        userService.deleteById(id);
     }
 }
